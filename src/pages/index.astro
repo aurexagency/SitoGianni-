@@ -1,0 +1,50 @@
+---
+/**
+ * index.astro — Homepage
+ * Assembla tutti i componenti nella struttura semantica della pagina.
+ * 
+ * Architettura:
+ *   BaseLayout → shell HTML + View Transitions + boot script GSAP/Lenis
+ *   Header     → nav glassmorphism + mobile drawer
+ *   ScrollLogo → bussola topografica SVG (fixed, GSAP-controlled)
+ *   BgTopoLines→ linee decorative SVG di sfondo
+ *   Hero       → §1 Hero (canvas sequence, SplitText, CTAs)
+ *   Vision     → §2 Vision (stat counters, parallax)
+ *   Services   → §3 Timed Cards (GSAP Flip carousel)
+ *   Contact    → §4 Form contatti (html5.md compliant)
+ *   Footer     → footer con nav e copyright
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Vision from '../components/Vision.astro';
+import Services from '../components/Services.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import ScrollLogo from '../components/ScrollLogo.astro';
+import BgTopoLines from '../components/BgTopoLines.astro';
+---
+
+<BaseLayout
+  title="Dott. Geol. Gianni Bastreghi — Geologo Professionista"
+  description="Studio di geologia professionale specializzato in Geologia applicata, Idrogeologia, Valutazioni ambientali ed Energie rinnovabili. Italia."
+>
+  <!-- Fixed nav -->
+  <Header />
+
+  <!-- Fixed decorative elements (aria-hidden) -->
+  <ScrollLogo />
+  <BgTopoLines />
+
+  <!-- Main content -->
+  <main id="main-content" tabindex="-1">
+    <Hero />
+    <Vision />
+    <Services />
+    <Contact />
+  </main>
+
+  <!-- Footer -->
+  <Footer />
+
+</BaseLayout>

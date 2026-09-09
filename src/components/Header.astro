@@ -1,0 +1,57 @@
+---
+/**
+ * Header.astro — Nav principale glassmorphism
+ * Hamburger mobile con drawer, logo wordmark, CTA nav.
+ */
+---
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav container" aria-label="Navigazione principale">
+
+    <!-- Logo / Wordmark -->
+    <a class="nav__logo" href="/" aria-label="Homepage — Dott. Geol. Gianni Bastreghi">
+      <span class="nav__logo-prefix mono">geo.</span>
+      <span class="nav__logo-name">Bastreghi</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="nav__links" role="list">
+      <li><a class="nav__link" href="#vision">Chi sono</a></li>
+      <li><a class="nav__link" href="#services">Servizi</a></li>
+      <li><a class="nav__link" href="#contact">Contatti</a></li>
+    </ul>
+
+    <!-- CTA nav -->
+    <a class="btn btn--ghost btn--sm" href="#contact" aria-label="Parla con me — vai ai contatti">
+      Parla con me
+    </a>
+
+    <!-- Hamburger (mobile) -->
+    <button
+      class="nav__burger"
+      id="nav-burger"
+      aria-label="Apri menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="nav__burger-line"></span>
+      <span class="nav__burger-line"></span>
+    </button>
+
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div
+    class="nav__mobile-drawer"
+    id="mobile-menu"
+    aria-hidden="true"
+    role="dialog"
+    aria-label="Menu mobile"
+  >
+    <ul class="nav__mobile-links" role="list">
+      <li><a class="nav__mobile-link" href="#vision">Chi sono</a></li>
+      <li><a class="nav__mobile-link" href="#services">Servizi</a></li>
+      <li><a class="nav__mobile-link" href="#contact">Contatti</a></li>
+    </ul>
+  </div>
+</header>

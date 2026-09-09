@@ -1,0 +1,87 @@
+---
+/**
+ * Hero.astro — §1 Hero Section
+ * Pinned da GSAP ScrollTrigger | Canvas frame-by-frame | SplitText title
+ */
+---
+
+<div id="hero-pin-wrapper">
+  <section
+    class="hero section section--full"
+    id="hero"
+    aria-label="Introduzione"
+    data-section="hero"
+  >
+    <!-- Canvas Sequence (Frame by Frame) -->
+    <div class="hero__canvas-wrapper" aria-hidden="true">
+      <canvas id="hero-sequence-canvas"></canvas>
+    </div>
+
+    <!-- Ambient Geo-Lines (Decorative) -->
+    <div class="hero__geo-lines" aria-hidden="true">
+      <span class="hero__geo-line hero__geo-line--h"></span>
+      <span class="hero__geo-line hero__geo-line--v"></span>
+    </div>
+
+    <div class="container hero__inner">
+
+      <!-- Eyebrow label -->
+      <p class="hero__eyebrow mono text-neon-green" data-gsap="fade-up" data-gsap-delay="0">
+        <span class="hero__eyebrow-tag">[ Ordine dei Geologi della Toscana N. 1856 ]</span>
+      </p>
+
+      <!-- Main headline — characters split by GSAP SplitText -->
+      <h1 class="hero__title display" data-gsap="split-chars" data-gsap-delay="0.2">
+        Dove la conoscenza<br />
+        <em class="text-neon-green">del territorio</em><br />
+        <span style="white-space: nowrap;">incontra la progettazione.</span>
+      </h1>
+
+      <!-- Sub-headline -->
+      <p class="hero__subtitle body-lg" data-gsap="fade-up" data-gsap-delay="0.6">
+        Geol. Gianni Bastreghi <br />
+        Studio di consulenza geologica e ambientale.
+      </p>
+
+      <!-- CTA row -->
+      <div class="hero__cta-group" data-gsap="fade-up" data-gsap-delay="0.8">
+        <!-- Primary CTA — magnetic hover via GSAP -->
+        <a
+          class="btn btn--primary btn--lg"
+          href="#services"
+          id="hero-cta-primary"
+          data-magnetic
+          aria-label="Scopri i Servizi offerti"
+        >
+          <span class="btn__label">Scopri i Servizi</span>
+          <span class="btn__icon" aria-hidden="true">&#8600;</span>
+        </a>
+
+        <!-- Secondary CTA -->
+        <a
+          class="btn btn--ghost btn--lg"
+          href="#contact"
+          id="hero-cta-secondary"
+          aria-label="Richiedi una consulenza geologica"
+        >
+          Richiedi una consulenza
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div
+        class="hero__scroll-indicator"
+        aria-label="Scorri in basso per scoprire i contenuti"
+        data-gsap="fade-in"
+        data-gsap-delay="1.2"
+      >
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+        <span class="mono text-muted">scroll</span>
+      </div>
+
+    </div>
+
+    <!-- Bottom edge fade -->
+    <div class="hero__bottom-fade" aria-hidden="true"></div>
+  </section>
+</div>

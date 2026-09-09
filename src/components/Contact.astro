@@ -1,0 +1,194 @@
+---
+/**
+ * Contact.astro — §4 Contatti / Booking Form
+ * Form conforme a html5.md: Nome+Cognome, Email, Telefono,
+ * N. Persone, Orario Arrivo, Allergie, Selezione Percorso, Privacy.
+ *
+ * Pattern: Floating Labels + Pill Radio Buttons
+ */
+---
+
+<section
+  class="cta-contact section section--padded-xl"
+  id="contact"
+  aria-label="Sezione contatti e richiesta consulenza"
+  data-section="contact"
+>
+  <div class="cta-contact__blob" aria-hidden="true"></div>
+
+  <div class="container cta-contact__inner">
+
+    <!-- Left column: headline -->
+    <div class="cta-contact__copy" data-gsap="fade-up">
+      <div class="section-label">
+        <span class="section-label__line" aria-hidden="true"></span>
+        <span class="mono text-muted section-label__text">03 / Contatti</span>
+      </div>
+
+      <h2 class="cta-contact__headline heading-xl">
+        Richiedi una<br />
+        <span class="text-neon-green">Consulenza.</span>
+      </h2>
+
+      <p class="cta-contact__body body-lg text-secondary">
+        Contattami per valutare insieme il percorso tecnico più efficace per il tuo intervento.
+      </p>
+
+      <address class="cta-contact__address">
+        <a class="contact-link mono" href="mailto:gia.bastreghi@outlook.it" id="contact-email" aria-label="Invia una email allo studio">
+          <span class="contact-link__icon" aria-hidden="true">@</span>
+          gia.bastreghi@outlook.it
+        </a>
+        <a class="contact-link mono" href="mailto:geogiannibastreghi@trustpec.it" aria-label="Invia una PEC allo studio">
+          <span class="contact-link__icon" aria-hidden="true">PEC</span>
+          geogiannibastreghi@trustpec.it
+        </a>
+        <a class="contact-link mono" href="tel:+393480097927" aria-label="Chiama il numero di cellulare dello studio">
+          <span class="contact-link__icon" aria-hidden="true">CEL</span>
+          348 009 7927
+        </a>
+        <a class="contact-link mono" href="tel:056422106" aria-label="Chiama il numero fisso dello studio">
+          <span class="contact-link__icon" aria-hidden="true">TEL</span>
+          0564 / 22106
+        </a>
+        <a class="contact-link mono" href="https://www.google.com/maps/search/?api=1&query=Via+F.P.+de+Calboli+15,+58100+Grosseto" target="_blank" rel="noopener noreferrer" aria-label="Visualizza la posizione dello studio su Google Maps">
+          <span class="contact-link__icon" aria-hidden="true">LOC</span>
+          Via F.P de Calboli n.15, 58100 Grosseto
+        </a>
+      </address>
+    </div>
+
+    <!-- Right column: contact form -->
+    <div class="cta-contact__form-wrapper" data-gsap="fade-up" data-gsap-delay="0.2">
+      <form
+        class="contact-form"
+        id="contact-form"
+        method="POST"
+        action="#"
+        novalidate
+        aria-label="Modulo di contatto e richiesta consulenza"
+      >
+
+        <!-- Row 1: Nome e Cognome + Email -->
+        <div class="form-row form-row--2col">
+          <div class="form-group form-group--float">
+            <input
+              class="form-input"
+              type="text"
+              id="contact-name"
+              name="name"
+              autocomplete="name"
+              placeholder=" "
+              required
+              aria-required="true"
+            />
+            <label class="form-label" for="contact-name">Nome e Cognome</label>
+            <span class="form-input__line" aria-hidden="true"></span>
+          </div>
+
+          <div class="form-group form-group--float">
+            <input
+              class="form-input"
+              type="email"
+              id="contact-email-input"
+              name="email"
+              autocomplete="email"
+              placeholder=" "
+              required
+              aria-required="true"
+            />
+            <label class="form-label" for="contact-email-input">Email</label>
+            <span class="form-input__line" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <!-- Row 2: Telefono -->
+        <div class="form-group form-group--float">
+          <input
+            class="form-input"
+            type="tel"
+            id="contact-phone-input"
+            name="phone"
+            autocomplete="tel"
+            placeholder=" "
+            required
+            aria-required="true"
+          />
+          <label class="form-label" for="contact-phone-input">Numero di Telefono</label>
+          <span class="form-input__line" aria-hidden="true"></span>
+        </div>
+
+        <!-- Row 4: Selezione Percorso / Area di interesse — Pill Radio Buttons -->
+        <fieldset class="form-group form-fieldset" id="contact-service-fieldset">
+          <legend class="form-label form-label--static">Selezione Percorso / Area di interesse</legend>
+          <div class="form-pills" role="radiogroup" aria-label="Seleziona un'area di interesse">
+            <label class="form-pill" for="percorso-geologia">
+              <input class="form-pill__input" type="radio" id="percorso-geologia" name="percorso" value="geologia" />
+              <span class="form-pill__label">Geologia &amp; Geotecnica</span>
+            </label>
+            <label class="form-pill" for="percorso-idro">
+              <input class="form-pill__input" type="radio" id="percorso-idro" name="percorso" value="idrogeologia" />
+              <span class="form-pill__label">Idrogeologia &amp; Risorse Idriche</span>
+            </label>
+            <label class="form-pill" for="percorso-ambiente">
+              <input class="form-pill__input" type="radio" id="percorso-ambiente" name="percorso" value="ambiente" />
+              <span class="form-pill__label">Ambiente &amp; Autorizzazioni</span>
+            </label>
+            <label class="form-pill" for="percorso-energia">
+              <input class="form-pill__input" type="radio" id="percorso-energia" name="percorso" value="energia" />
+              <span class="form-pill__label">Energia &amp; Infrastrutture</span>
+            </label>
+          </div>
+        </fieldset>
+
+
+
+        <!-- Row 6: Messaggio -->
+        <div class="form-group form-group--float">
+          <textarea
+            class="form-input form-textarea"
+            id="contact-message"
+            name="message"
+            rows="4"
+            placeholder=" "
+            required
+            aria-required="true"
+          ></textarea>
+          <label class="form-label" for="contact-message">Messaggio</label>
+          <span class="form-input__line" aria-hidden="true"></span>
+        </div>
+
+        <!-- Privacy + Submit -->
+        <div class="form-footer">
+          <label class="form-checkbox" for="contact-privacy">
+            <input
+              class="form-checkbox__input"
+              type="checkbox"
+              id="contact-privacy"
+              name="privacy"
+              required
+              aria-required="true"
+            />
+            <span class="form-checkbox__box" aria-hidden="true"></span>
+            <span class="form-checkbox__label body-sm text-muted">
+              Acconsento al trattamento dei dati personali (<a href="/privacy" class="link-underline">Privacy Policy</a>).
+            </span>
+          </label>
+
+          <button
+            class="btn btn--primary btn--lg form-submit"
+            type="submit"
+            id="contact-submit"
+            data-magnetic
+            aria-label="Invia il modulo di contatto"
+          >
+            <span class="btn__label">Invia messaggio</span>
+            <span class="btn__icon" aria-hidden="true">&#8594;</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</section>

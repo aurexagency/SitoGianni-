@@ -1,0 +1,35 @@
+---
+/**
+ * Footer.astro — Site Footer
+ * Brand, nav links, copyright.
+ * L'anno viene calcolato lato server da Astro (SSG).
+ */
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" id="site-footer" role="contentinfo">
+  <div class="container site-footer__inner">
+
+    <div class="site-footer__brand">
+      <span class="nav__logo-prefix mono">geo.</span>
+      <span class="nav__logo-name">Bastreghi</span>
+      <p class="site-footer__tagline body-sm text-muted">
+        Dott. Geol. Gianni Bastreghi — P.IVA 00000000000
+      </p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Navigazione footer">
+      <ul role="list">
+        <li><a class="footer-link" href="#vision">Chi sono</a></li>
+        <li><a class="footer-link" href="#services">Servizi</a></li>
+        <li><a class="footer-link" href="#contact">Contatti</a></li>
+        <li><a class="footer-link" href="/privacy">Privacy</a></li>
+      </ul>
+    </nav>
+
+    <p class="site-footer__copy mono text-muted body-sm">
+      &copy; {year} — Tutti i diritti riservati.
+    </p>
+
+  </div>
+</footer>

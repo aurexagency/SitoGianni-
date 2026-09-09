@@ -1,0 +1,25 @@
+{
+  "name": "sito-geologo",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Sito Web per Geologo Professionista — Dott. Geol. Gianni Bastreghi",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^7.2.3",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.14",
+    "@astrojs/sitemap": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
+  }
+}

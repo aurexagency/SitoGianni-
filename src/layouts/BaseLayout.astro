@@ -1,0 +1,145 @@
+---
+/**
+ * BaseLayout.astro — Shell HTML principale
+ * 
+ * Gestione ciclo di vita Astro View Transitions:
+ *   astro:page-load    → inizializza tutti gli script
+ *   astro:before-swap  → distrugge Lenis + ScrollTrigger (evita memory leak)
+ */
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogUrl?: string;
+}
+
+const {
+  title = 'Dott. Geol. Gianni Bastreghi — Geologo Professionista',
+  description = 'Studio di geologia professionale specializzato in Geologia applicata, Idrogeologia, Valutazioni ambientali ed Energie rinnovabili. Italia.',
+  ogUrl = 'https://www.giannibastreghigeologo.it',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="it" class="no-js">
+  <head>
+    <!-- =====================================================
+         META & SEO
+         ===================================================== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#161311" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={ogUrl} />
+
+    <!-- =====================================================
+         FONTS — Lora (Google Fonts)
+         ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- =====================================================
+         GSAP Club Plugin: SplitText (CDN — richiede licenza)
+         Se non hai licenza, questa riga può essere rimossa:
+         il codice ha un fallback automatico in animations.ts
+         ===================================================== -->
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"
+    ></script>
+
+    <!-- Astro View Transitions (ClientRouter — Astro 7) -->
+    <ClientRouter />
+  </head>
+
+  <body class="theme-dark" data-scroll-container>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"></div>
+    </div>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Slot: contenuto della pagina -->
+    <slot />
+
+  </body>
+</html>
+
+<!-- =====================================================
+     BOOT SCRIPT — Pattern Astro View Transitions
+     Usa type="module" per tree-shaking e ES imports.
+     
+     CICLO DI VITA:
+       astro:page-load   → init di tutti i moduli (ogni navigazione)
+       astro:before-swap → destroy Lenis + ScrollTrigger (prima swap DOM)
+     ===================================================== -->
+<script>
+  import { initLenis, destroyLenis } from '../scripts/lenis-init';
+  import { initGSAPAnimations, initScrollLogo, destroyGSAPAnimations } from '../scripts/animations';
+  import { initCursor } from '../scripts/cursor';
+  import { initMagneticButtons } from '../scripts/magnetic';
+  import { initHeroSequence } from '../scripts/hero-sequence';
+  import { initTimedCards } from '../scripts/timed-cards';
+  import { initContactFormAdvanced } from '../scripts/form-validation';
+  import { initNav } from '../scripts/nav';
+
+  /**
+   * Boot — chiamato ad ogni navigazione (inclusa la prima)
+   */
+  function boot(): void {
+    document.documentElement.classList.remove('no-js');
+
+    // 1. Nav & UI helpers (non-GSAP, esegui prima)
+    initNav();
+
+    // 2. Smooth scroll (Lenis bridge GSAP ticker)
+    initLenis();
+
+    // 3. Animazioni GSAP principali
+    initGSAPAnimations();
+    initScrollLogo();
+
+    // 4. Interazioni avanzate
+    initCursor();
+    initMagneticButtons();
+    initTimedCards();
+
+    // 5. Hero canvas sequence
+    initHeroSequence();
+
+    // 6. Form
+    initContactFormAdvanced();
+  }
+
+  /**
+   * Teardown — chiamato PRIMA che Astro swappi il DOM.
+   * Fondamentale per evitare memory leak con ScrollTrigger e Lenis.
+   */
+  function teardown(): void {
+    destroyLenis();
+    destroyGSAPAnimations();
+  }
+
+  // Prima visita (DOMContentLoaded non si ripete con View Transitions)
+  document.addEventListener('astro:page-load', boot);
+
+  // Prima della navigazione: pulisci istanze precedenti
+  document.addEventListener('astro:before-swap', teardown);
+</script>

@@ -1,0 +1,46 @@
+---
+/**
+ * ScrollLogo.astro — Bussola Topografica SVG (Fixed, z=2)
+ * Controllata da GSAP ScrollTrigger in animations.ts (initScrollLogo)
+ */
+---
+
+<div id="scroll-logo-wrapper" aria-hidden="true">
+  <svg
+    id="scroll-logo"
+    viewBox="0 0 200 200"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Logo geologico decorativo"
+  >
+    <!-- Contorno rombo -->
+    <polygon class="diamond-frame" points="100,4 196,100 100,196 4,100" />
+
+    <!-- Linee dei quadranti (assi centrali) -->
+    <line class="quadrant-line" x1="100" y1="4" x2="100" y2="196" />
+    <line class="quadrant-line" x1="4" y1="100" x2="196" y2="100" />
+
+    <!-- QUADRANTE SUPERIORE: curve di livello rilievo nord -->
+    <path class="topo-line topo-line--outer" d="M 100,20 C 118,32 140,46 155,60 C 148,54 132,44 100,38 C 68,44 52,54 45,60 C 60,46 82,32 100,20 Z" />
+    <path class="topo-line topo-line--mid"   d="M 100,36 C 116,46 136,58 148,70 C 140,64 126,56 100,52 C 74,56 60,64 52,70 C 64,58 84,46 100,36 Z" />
+    <path class="topo-line topo-line--inner" d="M 100,54 C 114,62 130,72 140,82 C 132,76 120,70 100,66 C 80,70 68,76 60,82 C 70,72 86,62 100,54 Z" />
+
+    <!-- QUADRANTE INFERIORE: riflesso simmetrico -->
+    <path class="topo-line topo-line--outer" d="M 100,180 C 82,168 60,154 45,140 C 52,146 68,156 100,162 C 132,156 148,146 155,140 C 140,154 118,168 100,180 Z" />
+    <path class="topo-line topo-line--mid"   d="M 100,164 C 84,154 64,142 52,130 C 60,136 74,144 100,148 C 126,144 140,136 148,130 C 136,142 116,154 100,164 Z" />
+    <path class="topo-line topo-line--inner" d="M 100,146 C 86,138 70,128 60,118 C 68,124 80,130 100,134 C 120,130 132,124 140,118 C 130,128 114,138 100,146 Z" />
+
+    <!-- QUADRANTE SINISTRO -->
+    <path class="topo-line topo-line--outer" d="M 20,100 C 32,82 46,60 60,45 C 54,52 44,68 38,100 C 44,132 54,148 60,155 C 46,140 32,118 20,100 Z" />
+    <path class="topo-line topo-line--mid"   d="M 38,100 C 48,84 60,64 70,52 C 64,60 56,74 52,100 C 56,126 64,140 70,148 C 60,136 48,116 38,100 Z" />
+
+    <!-- QUADRANTE DESTRO -->
+    <path class="topo-line topo-line--outer" d="M 180,100 C 168,82 154,60 140,45 C 146,52 156,68 162,100 C 156,132 146,148 140,155 C 154,140 168,118 180,100 Z" />
+    <path class="topo-line topo-line--mid"   d="M 162,100 C 152,84 140,64 130,52 C 136,60 144,74 148,100 C 144,126 136,140 130,148 C 140,136 152,116 162,100 Z" />
+
+    <!-- Centro — punto di mira -->
+    <circle cx="100" cy="100" r="3"  fill="var(--clr-accent)" opacity="0.7" />
+    <circle cx="100" cy="100" r="8"  fill="none" stroke="var(--clr-accent)"      stroke-width="0.8" opacity="0.4" />
+    <circle cx="100" cy="100" r="16" fill="none" stroke="var(--clr-accent-warm)" stroke-width="0.5" opacity="0.25" />
+  </svg>
+</div>

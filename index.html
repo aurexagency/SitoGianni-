@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="it" class="no-js">
+  <head>
+    <!-- =====================================================
+         META & SEO
+         ===================================================== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0f" />
+
+    <title>Dott. Geol. Gianni Bastreghi — Geologo Professionista</title>
+    <meta
+      name="description"
+      content="Studio di geologia professionale specializzato in Geologia applicata, Idrogeologia, Valutazioni ambientali ed Energie rinnovabili. [Città], Italia."
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dott. Geol. Gianni Bastreghi — Geologo Professionista" />
+    <meta
+      property="og:description"
+      content="Competenza tecnica al servizio della terra. Geologia · Idrogeologia · Ambiente · Energia."
+    />
+    <meta property="og:url" content="https://www.example.com" />
+
+    <!-- =====================================================
+         FONTS  (Google Fonts — Lora)
+         ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+    <!-- =====================================================
+         STYLESHEET
+         ===================================================== -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="theme-dark" data-scroll-container>
+
+    <!-- =====================================================
+         CURSOR CUSTOM  (dot + ring — GSAP-controlled)
+         ===================================================== -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"></div>
+    </div>
+
+    <!-- =====================================================
+         NOISE OVERLAY  (grain texture — CSS only, pseudo-element)
+         ===================================================== -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- =====================================================
+         HEADER / NAV
+         ===================================================== -->
+    <header class="site-header" id="site-header" role="banner">
+      <nav class="nav container" aria-label="Navigazione principale">
+
+        <!-- Logo / Wordmark -->
+        <a class="nav__logo" href="/" aria-label="Homepage — Dott. Geol. Gianni Bastreghi">
+          <span class="nav__logo-prefix mono">geo.</span>
+          <span class="nav__logo-name">Bastreghi</span>
+        </a>
+
+        <!-- Desktop links -->
+        <ul class="nav__links" role="list">
+          <li><a class="nav__link" href="#vision">Vision</a></li>
+          <li><a class="nav__link" href="#services">Servizi</a></li>
+          <li><a class="nav__link" href="#about">Chi sono</a></li>
+          <li><a class="nav__link" href="#contact">Contatti</a></li>
+        </ul>
+
+        <!-- CTA nav -->
+        <a class="btn btn--ghost btn--sm" href="#contact">
+          Parla con me
+        </a>
+
+        <!-- Hamburger (mobile) -->
+        <button
+          class="nav__burger"
+          id="nav-burger"
+          aria-label="Apri menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="nav__burger-line"></span>
+          <span class="nav__burger-line"></span>
+        </button>
+
+      </nav>
+
+      <!-- Mobile drawer -->
+      <div class="nav__mobile-drawer" id="mobile-menu" aria-hidden="true" role="dialog" aria-label="Menu mobile">
+        <ul class="nav__mobile-links" role="list">
+          <li><a class="nav__mobile-link" href="#vision">Vision</a></li>
+          <li><a class="nav__mobile-link" href="#services">Servizi</a></li>
+          <li><a class="nav__mobile-link" href="#about">Chi sono</a></li>
+          <li><a class="nav__mobile-link" href="#contact">Contatti</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         SCROLL LOGO — Bussola Topografica (Fixed, z=2)
+         Controllata da GSAP ScrollTrigger in MODULE_12
+         ===================================================== -->
+    <div id="scroll-logo-wrapper" aria-hidden="true">
+      <svg id="scroll-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo geologico">
+        <!-- Contorno rombo (rotato 45° via CSS rotate su wrapper) -->
+        <polygon class="diamond-frame" points="100,4 196,100 100,196 4,100"/>
+
+        <!-- Linee dei quadranti (assi centrali) -->
+        <line class="quadrant-line" x1="100" y1="4" x2="100" y2="196"/>
+        <line class="quadrant-line" x1="4" y1="100" x2="196" y2="100"/>
+
+        <!-- === QUADRANTE SUPERIORE: curve di livello rilievo nord === -->
+        <path class="topo-line topo-line--outer" d="M 100,20 C 118,32 140,46 155,60 C 148,54 132,44 100,38 C 68,44 52,54 45,60 C 60,46 82,32 100,20 Z"/>
+        <path class="topo-line topo-line--mid" d="M 100,36 C 116,46 136,58 148,70 C 140,64 126,56 100,52 C 74,56 60,64 52,70 C 64,58 84,46 100,36 Z"/>
+        <path class="topo-line topo-line--inner" d="M 100,54 C 114,62 130,72 140,82 C 132,76 120,70 100,66 C 80,70 68,76 60,82 C 70,72 86,62 100,54 Z"/>
+
+        <!-- === QUADRANTE INFERIORE: riflesso simmetrico === -->
+        <path class="topo-line topo-line--outer" d="M 100,180 C 82,168 60,154 45,140 C 52,146 68,156 100,162 C 132,156 148,146 155,140 C 140,154 118,168 100,180 Z"/>
+        <path class="topo-line topo-line--mid" d="M 100,164 C 84,154 64,142 52,130 C 60,136 74,144 100,148 C 126,144 140,136 148,130 C 136,142 116,154 100,164 Z"/>
+        <path class="topo-line topo-line--inner" d="M 100,146 C 86,138 70,128 60,118 C 68,124 80,130 100,134 C 120,130 132,124 140,118 C 130,128 114,138 100,146 Z"/>
+
+        <!-- === QUADRANTE SINISTRO: layer geologico est-ovest === -->
+        <path class="topo-line topo-line--outer" d="M 20,100 C 32,82 46,60 60,45 C 54,52 44,68 38,100 C 44,132 54,148 60,155 C 46,140 32,118 20,100 Z"/>
+        <path class="topo-line topo-line--mid" d="M 38,100 C 48,84 60,64 70,52 C 64,60 56,74 52,100 C 56,126 64,140 70,148 C 60,136 48,116 38,100 Z"/>
+
+        <!-- === QUADRANTE DESTRO === -->
+        <path class="topo-line topo-line--outer" d="M 180,100 C 168,82 154,60 140,45 C 146,52 156,68 162,100 C 156,132 146,148 140,155 C 154,140 168,118 180,100 Z"/>
+        <path class="topo-line topo-line--mid" d="M 162,100 C 152,84 140,64 130,52 C 136,60 144,74 148,100 C 144,126 136,140 130,148 C 140,136 152,116 162,100 Z"/>
+
+        <!-- Centro — piccolo punto di mira -->
+        <circle cx="100" cy="100" r="3" fill="var(--clr-accent)" opacity="0.7"/>
+        <circle cx="100" cy="100" r="8" fill="none" stroke="var(--clr-accent)" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="100" cy="100" r="16" fill="none" stroke="var(--clr-accent-warm)" stroke-width="0.5" opacity="0.25"/>
+      </svg>
+    </div>
+
+    <!-- Sfondo con linee topografiche -->
+    <div id="bg-topo-lines" aria-hidden="true">
+      <svg width="100%" height="100%" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="bg-topo-path" d="M -100,200 Q 300,50 600,300 T 1200,100" />
+        <path class="bg-topo-path" d="M -100,500 Q 400,200 800,600 T 1400,300" />
+        <path class="bg-topo-path" d="M -200,800 Q 300,900 700,500 T 1500,700" />
+        <path class="bg-topo-path" d="M 100,-100 Q 200,400 600,600 T 1100,1200" />
+      </svg>
+    </div>
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+    <main id="main-content" tabindex="-1">
+
+      <!-- ===================================================
+           §1 · HERO SECTION
+           — Pinned by GSAP
+           =================================================== -->
+    <div id="hero-pin-wrapper">
+      <section 
+        class="hero section section--full" 
+        id="hero" 
+        aria-label="Introduzione"
+        data-section="hero"
+      >
+        <!-- Canvas Sequence (Frame by Frame) -->
+        <div class="hero__canvas-wrapper" aria-hidden="true">
+          <canvas id="hero-sequence-canvas"></canvas>
+        </div>
+        
+        <!-- Ambient Geo-Lines (Decorative) -->
+        <div class="hero__geo-lines" aria-hidden="true">
+          <span class="hero__geo-line hero__geo-line--h"></span>
+          <span class="hero__geo-line hero__geo-line--v"></span>
+        </div>
+
+        <div class="container hero__inner">
+
+          <!-- Eyebrow label -->
+          <p class="hero__eyebrow mono text-neon-green" data-gsap="fade-up" data-gsap-delay="0">
+            <span class="hero__eyebrow-tag">[ Ordine dei Geologi · Regione __ ]</span>
+          </p>
+
+          <!-- Main headline — characters split by GSAP SplitText -->
+          <h1 class="hero__title display" data-gsap="split-chars" data-gsap-delay="0.2">
+            Dove la terra<br />
+            <em class="text-neon-green">racconta</em><br />
+            la sua storia.
+          </h1>
+
+          <!-- Sub-headline -->
+          <p class="hero__subtitle body-lg" data-gsap="fade-up" data-gsap-delay="0.6">
+            Geol. Gianni Bastreghi <br />
+            Studio di consulenza geologica e ambientale.
+          </p>
+
+          <!-- CTA row -->
+          <div class="hero__cta-group" data-gsap="fade-up" data-gsap-delay="0.8">
+            <!-- Primary CTA — magnetic hover via GSAP -->
+            <a
+              class="btn btn--primary btn--lg"
+              href="#services"
+              id="hero-cta-primary"
+              data-magnetic
+            >
+              <span class="btn__label">Scopri i Servizi</span>
+              <span class="btn__icon" aria-hidden="true">&#8600;</span>
+            </a>
+
+            <!-- Secondary CTA -->
+            <a
+              class="btn btn--ghost btn--lg"
+              href="#contact"
+              id="hero-cta-secondary"
+            >
+              Richiedi una consulenza
+            </a>
+          </div>
+
+          <!-- Scroll indicator -->
+          <div class="hero__scroll-indicator" aria-label="Scorri in basso" data-gsap="fade-in" data-gsap-delay="1.2">
+            <span class="hero__scroll-line" aria-hidden="true"></span>
+            <span class="mono text-muted">scroll</span>
+          </div>
+
+        </div>
+
+        <!-- Bottom edge fade -->
+        <div class="hero__bottom-fade" aria-hidden="true"></div>
+      </section>
+    </div>
+
+
+      <!-- ===================================================
+           §2 · VISION / INTRO  (whitespace-heavy)
+           — Parallax text, strong typographic hierarchy
+           =================================================== -->
+      <section
+        class="vision section section--padded-xl"
+        id="vision"
+        aria-label="Vision e approccio professionale"
+        data-section="vision"
+      >
+        <div class="container vision__inner">
+
+          <!-- Section label -->
+          <div class="section-label" data-gsap="fade-up">
+            <span class="section-label__line" aria-hidden="true"></span>
+            <span class="mono text-muted section-label__text">01 / Vision</span>
+          </div>
+
+          <!-- Big statement — 2-col asymmetric layout -->
+          <div class="vision__grid" data-gsap="stagger-up">
+
+            <!-- Left: headline -->
+            <div class="vision__col-headline">
+              <h2 class="vision__headline heading-xl">
+                La geologia<br />non e' solo scienza.<br />
+                <span class="text-neon-green">E' visione.</span>
+              </h2>
+            </div>
+
+            <!-- Right: body + stat counters -->
+            <div class="vision__col-body">
+              <p class="vision__body body-lg text-secondary">
+                Con oltre [N] anni di esperienza sul campo, offro consulenze tecniche
+                rigorose fuse con una profonda comprensione del territorio.
+                Ogni studio parte dall'ascolto: del cliente, e della terra stessa.
+              </p>
+
+              <!-- Stat counters (animated via GSAP CountTo) -->
+              <div class="vision__stats" role="list" aria-label="Dati chiave">
+                <div class="stat-item" role="listitem" data-gsap="count-up" data-count="150">
+                  <span class="stat-item__number mono" aria-live="polite">0</span>
+                  <span class="stat-item__suffix mono">+</span>
+                  <p class="stat-item__label text-muted">Progetti completati</p>
+                </div>
+                <div class="stat-item" role="listitem" data-gsap="count-up" data-count="20">
+                  <span class="stat-item__number mono" aria-live="polite">0</span>
+                  <span class="stat-item__suffix mono">+</span>
+                  <p class="stat-item__label text-muted">Anni di esperienza</p>
+                </div>
+                <div class="stat-item" role="listitem" data-gsap="count-up" data-count="98">
+                  <span class="stat-item__number mono" aria-live="polite">0</span>
+                  <span class="stat-item__suffix mono">%</span>
+                  <p class="stat-item__label text-muted">Clienti soddisfatti</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Decorative large number (parallax) -->
+        <div class="vision__bg-number" aria-hidden="true" data-parallax="0.3">01</div>
+
+      </section>
+
+
+      <!-- ===================================================
+           §3 · SERVICES — "Timed Cards" interattive
+           — 4 macro-aree con hover avanzato e reveal progressivo
+           =================================================== -->
+      <section
+        class="services section section--padded-xl"
+        id="services"
+        aria-label="Servizi offerti"
+        data-section="services"
+      >
+        <div class="container services__inner">
+
+          <!-- Section label -->
+          <div class="section-label" data-gsap="fade-up">
+            <span class="section-label__line" aria-hidden="true"></span>
+            <span class="mono text-muted section-label__text">02 / Servizi</span>
+          </div>
+
+          <!-- Intro headline -->
+          <div class="services__header" data-gsap="fade-up" data-gsap-delay="0.1">
+            <h2 class="services__headline heading-xl">
+              Quattro<br />macro-aree<br />di competenza.
+            </h2>
+            <p class="services__intro body-lg text-secondary">
+              Dalla conoscenza del sottosuolo alla gestione delle criticità geologiche: Consulenza tecnica per Privati, Progettisti ed Enti.
+            </p>
+          </div>
+
+          <!-- Timed Cards Grid -->
+          <div
+            class="services__cards-grid"
+            role="list"
+            aria-label="Lista servizi"
+
+          >
+
+            <!-- Card 01: GEOLOGIA -->
+            <article
+              class="service-card"
+              id="service-card-geologia"
+              role="listitem"
+              data-index="01"
+              data-tag="Geologia"
+
+              tabindex="0"
+              aria-label="Geologia applicata"
+            >
+              <div class="service-card__inner">
+                <div class="service-card__accent" aria-hidden="true"></div>
+
+                <!-- Colonna sinistra: indice + icona -->
+                <div class="service-card__left">
+                  <span class="service-card__index mono text-muted">01</span>
+                  <div class="service-card__icon" aria-hidden="true">
+                    <svg class="icon icon--geology" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 36 L14 20 L24 28 L34 16 L44 36 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+                      <path d="M4 42 L44 42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      <circle cx="14" cy="20" r="2" fill="currentColor" opacity="0.7"/>
+                      <circle cx="24" cy="28" r="2" fill="currentColor" opacity="0.7"/>
+                      <circle cx="34" cy="16" r="2" fill="currentColor" opacity="0.7"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Colonna destra: titolo + desc + tags -->
+                <div class="service-card__content">
+                  <h3 class="service-card__title heading-md">Geologia e Geotecnica</h3>
+                  <p class="service-card__desc body-sm text-secondary">
+                    Studi geologici, relazioni tecniche per pratiche edilizie,
+                    caratterizzazione litologica e geomeccanica del sottosuolo.
+                  </p>
+                  <div class="service-card__tags" aria-label="Temi principali">
+                    <span class="tag">Studio del suolo</span>
+                    <span class="tag">Relazioni PdC</span>
+                    <span class="tag">Mappatura</span>
+                  </div>
+                </div>
+
+                <a class="service-card__cta" href="#contact" aria-label="Approfondisci Geologia">
+                  <span class="service-card__cta-label">Approfondisci</span>
+                  <span class="service-card__cta-arrow" aria-hidden="true">&#8594;</span>
+                </a>
+
+                <!-- Progress bar -->
+                <div class="service-card__progress-bar" aria-hidden="true"></div>
+              </div>
+            </article>
+
+            <!-- Card 02: IDROGEOLOGIA -->
+            <article
+              class="service-card"
+              id="service-card-idrogeologia"
+              role="listitem"
+              data-index="02"
+              data-tag="Idrogeologia"
+
+              tabindex="0"
+              aria-label="Idrogeologia"
+            >
+              <div class="service-card__inner">
+                <div class="service-card__accent" aria-hidden="true"></div>
+
+                <div class="service-card__left">
+                  <span class="service-card__index mono text-muted">02</span>
+                  <div class="service-card__icon" aria-hidden="true">
+                    <svg class="icon icon--idro" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M24 6 C24 6 12 18 12 28 C12 35.2 17.4 41 24 41 C30.6 41 36 35.2 36 28 C36 18 24 6 24 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+                      <path d="M18 32 Q24 26 30 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+                      <path d="M16 38 Q24 31 32 38" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.35"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="service-card__content">
+                  <h3 class="service-card__title heading-md">Idrogeologia e Risorse Idriche</h3>
+                  <p class="service-card__desc body-sm text-secondary">
+                    Indagini idrogeologiche, tutela delle acque sotterranee,
+                    perimetrazione aree di salvaguardia e compatibilita' idraulica.
+                  </p>
+                  <div class="service-card__tags" aria-label="Temi principali">
+                    <span class="tag">Acque sotterranee</span>
+                    <span class="tag">Pozzi</span>
+                    <span class="tag">Rischio idraulico</span>
+                  </div>
+                </div>
+
+                <a class="service-card__cta" href="#contact" aria-label="Approfondisci Idrogeologia">
+                  <span class="service-card__cta-label">Approfondisci</span>
+                  <span class="service-card__cta-arrow" aria-hidden="true">&#8594;</span>
+                </a>
+
+                <div class="service-card__progress-bar" aria-hidden="true"></div>
+              </div>
+            </article>
+
+            <!-- Card 03: AMBIENTE -->
+            <article
+              class="service-card"
+              id="service-card-ambiente"
+              role="listitem"
+              data-index="03"
+              data-tag="Ambiente"
+
+              tabindex="0"
+              aria-label="Valutazioni ambientali"
+            >
+              <div class="service-card__inner">
+                <div class="service-card__accent" aria-hidden="true"></div>
+
+                <div class="service-card__left">
+                  <span class="service-card__index mono text-muted">03</span>
+                  <div class="service-card__icon" aria-hidden="true">
+                    <svg class="icon icon--ambiente" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                      <path d="M24 6 C14 14 10 22 14 32 C18 38 30 38 34 32 C38 22 34 14 24 6Z" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+                      <path d="M6 24 L42 24" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+                      <path d="M24 6 L24 42" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="service-card__content">
+                  <h3 class="service-card__title heading-md">Ambiente e Territorio</h3>
+                  <p class="service-card__desc body-sm text-secondary">
+                    Caratterizzazione e bonifica di siti contaminati, VIA/VAS,
+                    analisi di rischio sito-specifica e gestione rifiuti speciali.
+                  </p>
+                  <div class="service-card__tags" aria-label="Temi principali">
+                    <span class="tag">Bonifica</span>
+                    <span class="tag">VIA / VAS</span>
+                    <span class="tag">Analisi rischio</span>
+                  </div>
+                </div>
+
+                <a class="service-card__cta" href="#contact" aria-label="Approfondisci Ambiente">
+                  <span class="service-card__cta-label">Approfondisci</span>
+                  <span class="service-card__cta-arrow" aria-hidden="true">&#8594;</span>
+                </a>
+
+                <div class="service-card__progress-bar" aria-hidden="true"></div>
+              </div>
+            </article>
+
+            <!-- Card 04: ENERGIA -->
+            <article
+              class="service-card"
+              id="service-card-energia"
+              role="listitem"
+              data-index="04"
+              data-tag="Energia"
+
+              tabindex="0"
+              aria-label="Energia e geotermia"
+            >
+              <div class="service-card__inner">
+                <div class="service-card__accent" aria-hidden="true"></div>
+
+                <div class="service-card__left">
+                  <span class="service-card__index mono text-muted">04</span>
+                  <div class="service-card__icon" aria-hidden="true">
+                    <svg class="icon icon--energia" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M26 6 L16 26 L22 26 L20 42 L34 20 L28 20 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+                      <path d="M8 38 Q12 35 16 38 Q20 41 24 38" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.45"/>
+                      <path d="M8 43 Q12 40 16 43 Q20 46 24 43" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.25"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="service-card__content">
+                  <h3 class="service-card__title heading-md">Energia e Infrastrutture</h3>
+                  <p class="service-card__desc body-sm text-secondary">
+                    Progettazione di impianti geotermici a bassa entalpia, sondaggi
+                    geognostici per pompe di calore e studi di fattibilita' energetica.
+                  </p>
+                  <div class="service-card__tags" aria-label="Temi principali">
+                    <span class="tag">Geotermia</span>
+                    <span class="tag">Pompe di calore</span>
+                    <span class="tag">Sostenibilita'</span>
+                  </div>
+                </div>
+
+                <a class="service-card__cta" href="#contact" aria-label="Approfondisci Energia">
+                  <span class="service-card__cta-label">Approfondisci</span>
+                  <span class="service-card__cta-arrow" aria-hidden="true">&#8594;</span>
+                </a>
+
+                <div class="service-card__progress-bar" aria-hidden="true"></div>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ===================================================
+           §4 · PRE-FOOTER / CTA — Contatti
+           =================================================== -->
+      <section
+        class="cta-contact section section--padded-xl"
+        id="contact"
+        aria-label="Sezione contatti e richiesta consulenza"
+        data-section="contact"
+      >
+        <div class="cta-contact__blob" aria-hidden="true"></div>
+
+        <div class="container cta-contact__inner">
+
+          <!-- Left column: headline -->
+          <div class="cta-contact__copy" data-gsap="fade-up">
+            <div class="section-label">
+              <span class="section-label__line" aria-hidden="true"></span>
+              <span class="mono text-muted section-label__text">03 / Contatti</span>
+            </div>
+
+            <h2 class="cta-contact__headline heading-xl">
+              Richiedi una<br />
+              <span class="text-neon-green">Consulenza.</span>
+            </h2>
+
+            <p class="cta-contact__body body-lg text-secondary">
+              Contattami per valutare insieme il percorso tecnico più efficace per il tuo intervento.
+            </p>
+
+            <address class="cta-contact__address">
+              <a class="contact-link mono" href="mailto:gia.bastreghi@outlook.it" id="contact-email">
+                <span class="contact-link__icon" aria-hidden="true">@</span>
+                gia.bastreghi@outlook.it
+              </a>
+              <a class="contact-link mono" href="mailto:geogiannibastreghi@trustpec.it">
+                <span class="contact-link__icon" aria-hidden="true">PEC</span>
+                geogiannibastreghi@trustpec.it
+              </a>
+              <a class="contact-link mono" href="tel:+393480097927">
+                <span class="contact-link__icon" aria-hidden="true">CEL</span>
+                348 009 7927
+              </a>
+              <a class="contact-link mono" href="tel:056422106">
+                <span class="contact-link__icon" aria-hidden="true">TEL</span>
+                0564 / 22106
+              </a>
+              <a class="contact-link mono" href="https://www.google.com/maps/search/?api=1&query=Via+F.P.+de+Calboli+15,+58100+Grosseto" target="_blank" rel="noopener noreferrer">
+                <span class="contact-link__icon" aria-hidden="true">LOC</span>
+                Via F.P de Calboli n.15, 58100 Grosseto
+              </a>
+            </address>
+          </div>
+
+          <!-- Right column: contact form -->
+          <div class="cta-contact__form-wrapper" data-gsap="fade-up" data-gsap-delay="0.2">
+            <form
+              class="contact-form"
+              id="contact-form"
+              method="POST"
+              action="#"
+              novalidate
+              aria-label="Modulo di contatto e richiesta consulenza"
+            >
+
+              <!-- Row 1: Nome e Cognome + Email -->
+              <div class="form-row form-row--2col">
+                <div class="form-group form-group--float">
+                  <input
+                    class="form-input"
+                    type="text"
+                    id="contact-name"
+                    name="name"
+                    autocomplete="name"
+                    placeholder=" "
+                    required
+                    aria-required="true"
+                  />
+                  <label class="form-label" for="contact-name">Nome e Cognome</label>
+                  <span class="form-input__line" aria-hidden="true"></span>
+                </div>
+
+                <div class="form-group form-group--float">
+                  <input
+                    class="form-input"
+                    type="email"
+                    id="contact-email-input"
+                    name="email"
+                    autocomplete="email"
+                    placeholder=" "
+                    required
+                    aria-required="true"
+                  />
+                  <label class="form-label" for="contact-email-input">Email</label>
+                  <span class="form-input__line" aria-hidden="true"></span>
+                </div>
+              </div>
+
+              <!-- Row 2: Telefono -->
+              <div class="form-group form-group--float">
+                <input
+                  class="form-input"
+                  type="tel"
+                  id="contact-phone-input"
+                  name="phone"
+                  autocomplete="tel"
+                  placeholder=" "
+                  required
+                  aria-required="true"
+                />
+                <label class="form-label" for="contact-phone-input">Numero di Telefono</label>
+                <span class="form-input__line" aria-hidden="true"></span>
+              </div>
+
+              <!-- Row 4: Selezione Percorso / Area di interesse — Pill Radio Buttons -->
+              <fieldset class="form-group form-fieldset" id="contact-service-fieldset">
+                <legend class="form-label form-label--static">Selezione Percorso / Area di interesse</legend>
+                <div class="form-pills" role="radiogroup" aria-label="Seleziona un'area di interesse">
+                  <label class="form-pill" for="percorso-geologia">
+                    <input class="form-pill__input" type="radio" id="percorso-geologia" name="percorso" value="geologia" />
+                    <span class="form-pill__label">Geologia &amp; Geotecnica</span>
+                  </label>
+                  <label class="form-pill" for="percorso-idro">
+                    <input class="form-pill__input" type="radio" id="percorso-idro" name="percorso" value="idrogeologia" />
+                    <span class="form-pill__label">Idrogeologia &amp; Risorse Idriche</span>
+                  </label>
+                  <label class="form-pill" for="percorso-ambiente">
+                    <input class="form-pill__input" type="radio" id="percorso-ambiente" name="percorso" value="ambiente" />
+                    <span class="form-pill__label">Ambiente &amp; Autorizzazioni</span>
+                  </label>
+                  <label class="form-pill" for="percorso-energia">
+                    <input class="form-pill__input" type="radio" id="percorso-energia" name="percorso" value="energia" />
+                    <span class="form-pill__label">Energia &amp; Infrastrutture</span>
+                  </label>
+                </div>
+              </fieldset>
+
+
+
+              <!-- Row 6: Messaggio -->
+              <div class="form-group form-group--float">
+                <textarea
+                  class="form-input form-textarea"
+                  id="contact-message"
+                  name="message"
+                  rows="4"
+                  placeholder=" "
+                  required
+                  aria-required="true"
+                ></textarea>
+                <label class="form-label" for="contact-message">Messaggio</label>
+                <span class="form-input__line" aria-hidden="true"></span>
+              </div>
+
+              <!-- Privacy + Submit -->
+              <div class="form-footer">
+                <label class="form-checkbox" for="contact-privacy">
+                  <input
+                    class="form-checkbox__input"
+                    type="checkbox"
+                    id="contact-privacy"
+                    name="privacy"
+                    required
+                    aria-required="true"
+                  />
+                  <span class="form-checkbox__box" aria-hidden="true"></span>
+                  <span class="form-checkbox__label body-sm text-muted">
+                    Acconsento al trattamento dei dati personali (<a href="/privacy" class="link-underline">Privacy Policy</a>).
+                  </span>
+                </label>
+
+                <button
+                  class="btn btn--primary btn--lg form-submit"
+                  type="submit"
+                  id="contact-submit"
+                  data-magnetic
+                  aria-label="Invia il modulo di contatto"
+                >
+                  <span class="btn__label">Invia messaggio</span>
+                  <span class="btn__icon" aria-hidden="true">&#8594;</span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+    <footer class="site-footer" id="site-footer" role="contentinfo">
+      <div class="container site-footer__inner">
+
+        <div class="site-footer__brand">
+          <span class="nav__logo-prefix mono">geo.</span>
+          <span class="nav__logo-name">Bastreghi</span>
+          <p class="site-footer__tagline body-sm text-muted">
+            Dott. Geol. Gianni Bastreghi — P.IVA 00000000000
+          </p>
+        </div>
+
+        <nav class="site-footer__nav" aria-label="Navigazione footer">
+          <ul role="list">
+            <li><a class="footer-link" href="#vision">Vision</a></li>
+            <li><a class="footer-link" href="#services">Servizi</a></li>
+            <li><a class="footer-link" href="#contact">Contatti</a></li>
+            <li><a class="footer-link" href="/privacy">Privacy</a></li>
+          </ul>
+        </nav>
+
+        <p class="site-footer__copy mono text-muted body-sm">
+          &copy; <span id="footer-year"></span> — Tutti i diritti riservati.
+        </p>
+
+      </div>
+    </footer>
+
+    <!-- =====================================================
+         SCRIPTS — ordine di caricamento IMPORTANTE
+         =====================================================
+
+         1. GSAP core + plugin  → senza defer: devono essere
+            disponibili PRIMA che main.js esegua registerPlugin()
+         2. Lenis               → smooth scroll, prima di main.js
+         3. main.js             → defer: si inizializza dopo DOM
+
+         ===================================================== -->
+
+    <!-- 1a. GSAP Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- 1b. ScrollTrigger plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- 1c. Flip plugin (Step 3: Timed Cards interattive) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+    <!-- 1d. SplitText plugin (GSAP Club — opzionale, rimuovi se non hai licenza) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+
+    <!-- 2. Lenis Smooth Scroll (studio-freight/lenis v1.1.14) -->
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+    <!-- 3. Main JS (Step 3: + Timed Cards Flip + Form Validation) -->
+    <script src="main.js" defer></script>
+
+  </body>
+</html>

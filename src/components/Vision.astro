@@ -1,0 +1,122 @@
+---
+/**
+ * Vision.astro — §2 Chi siamo / Biografia
+ *
+ * Layout editoriale in 3 blocchi verticali:
+ *   A. Opening Statement — frase d'impatto full-width con SplitText
+ *   B. Grid biografica asimmetrica — citazione + corpo + metodologia
+ *   C. Stat counters — 3 dati chiave con count-up GSAP
+ *
+ * Tutte le animazioni usano gli attributi data-gsap
+ * riconosciuti da src/scripts/animations.ts.
+ */
+---
+
+<section
+  class="vision section section--padded-xl"
+  id="vision"
+  aria-label="Vision e biografia professionale"
+  data-section="vision"
+>
+  <div class="vision__inner container">
+
+    <!-- ─── SECTION LABEL ─────────────────────────────────── -->
+    <div class="section-label" data-gsap="fade-up">
+      <span class="section-label__line" aria-hidden="true"></span>
+      <span class="mono text-muted section-label__text">01 / Chi sono</span>
+    </div>
+
+
+    <!-- ─── BLOCCO A: OPENING STATEMENT ──────────────────────
+         Frase d'impatto a tutta larghezza.
+         SplitText la spezza carattere per carattere nello scroll.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="vision__statement" data-gsap="fade-up" data-gsap-delay="0.1">
+      <h2 class="vision__statement-headline heading-xl">
+        La Geologia come<br />
+        strumento per,<br />
+        <em class="text-neon-green">progettare con consapevolezza.</em>
+      </h2>
+    </div>
+
+
+    <!-- ─── BLOCCO B: BIOGRAFIA ──────────────────────────────
+         Testo centrato con parole chiave evidenziate.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="vision__bio-centered" data-gsap="stagger-up">
+      <p class="body-lg text-secondary">
+        Sono il Geologo Gianni Bastreghi e svolgo attività di <strong class="text-neon-green">consulenza geologica, geotecnica e sismica</strong> a supporto di progettisti, imprese, enti pubblici e privati.
+      </p>
+      <p class="body-lg text-secondary">
+        Il mio lavoro nasce dalla convinzione che una corretta <strong class="text-neon-green">conoscenza delle caratteristiche del terreno</strong> sia il punto di partenza per sviluppare progetti più consapevoli, sicuri ed efficienti.
+      </p>
+      <p class="body-lg text-secondary">
+        Attraverso <strong class="text-neon-green">indagini geologiche, analisi geotecniche e valutazioni</strong> delle condizioni del territorio, fornisco un supporto tecnico concreto nelle diverse fasi progettuali: dalla pianificazione iniziale alla realizzazione dell'opera.
+      </p>
+      <p class="body-lg text-secondary">
+        L'approccio combina <strong class="text-neon-green">conoscenza scientifica, esperienza sul campo e attenzione alle esigenze progettuali</strong>, con l'obiettivo di tradurre la complessità del sottosuolo in informazioni chiare e utili per le scelte tecniche.
+      </p>
+      <p class="body-lg text-secondary">
+        Ogni intervento presenta caratteristiche specifiche: comprenderle significa <strong class="text-neon-green">prevenire criticità, ottimizzare le soluzioni</strong> e costruire un rapporto equilibrato tra opere e territorio.
+      </p>
+    </div>
+
+
+
+
+  </div>
+
+  <!-- Numero decorativo di sfondo (parallax GSAP) -->
+  <div class="vision__bg-number" aria-hidden="true" data-parallax="0.3">01</div>
+
+</section>
+
+
+<style>
+  /* ── Opening Statement ────────────────────────────────── */
+  .vision__statement {
+    margin-top: var(--sp-12);
+    margin-bottom: var(--sp-16);
+    max-width: 100%;
+  }
+
+  .vision__statement-headline {
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.03em;
+  }
+
+  .vision__bio-centered {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    text-align: center;
+    margin-bottom: var(--sp-12);
+  }
+
+  .vision__bio-centered strong {
+    font-weight: 600;
+  }
+
+
+
+  /* ── Responsive ───────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .vision__bio-centered {
+      text-align: left;
+    }
+
+    .vision__statement-headline {
+      font-size: clamp(2.2rem, 7vw, 3.5rem);
+    }
+  }
+
+  /* ── Prefers reduced motion ────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .vision__quote {
+      transition: none;
+    }
+  }
+</style>
