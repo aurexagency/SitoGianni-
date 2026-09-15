@@ -13,9 +13,9 @@ export function initHeroSequence(): void {
   if (!ctx) return;
 
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const frameCount = 108;
+  const frameCount = 82;
   const currentFrame = (index: number) =>
-    `/pozzo%20hero/pozzo%20hero%20_${index.toString().padStart(3, '0')}.webp`;
+    `/hero-frame 2/hero-frame_${index.toString().padStart(3, '0')}.webp`;
 
   const images: HTMLImageElement[] = [];
   const seq = { frame: 0 };
@@ -73,9 +73,9 @@ export function initHeroSequence(): void {
       scrollTrigger: {
         trigger: '#hero-pin-wrapper',
         start: 'top top',
-        end: '+=200%',
+        end: '+=350%',
         pin: true,
-        scrub: 0.5,
+        scrub: 1.5,
       },
       onUpdate: render,
     });

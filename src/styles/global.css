@@ -936,7 +936,7 @@ button {
   transform: scaleY(0.4);
 }
 
-/* Colonna sinistra: indice + icona */
+/* Colonna sinistra: icona (indice rimosso) */
 .service-card__left {
   display: flex;
   flex-direction: column;

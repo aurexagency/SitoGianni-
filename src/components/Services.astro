@@ -11,13 +11,14 @@ const cards = [
     index: '01',
     tag: 'Geologia',
     label: 'Geologia applicata',
+    titleHtml: '<span class="text-neon-green">G</span>eologia e <span class="text-neon-green">G</span>eotecnica',
     title: 'Geologia e Geotecnica',
     desc: `<ul class="service-list">
       <li>Relazioni geologiche, geotecniche e sismiche</li>
-      <li>Modelli <span class="text-neon-green">geologici e geotecnici</span></li>
+      <li>Modelli geologici e geotecnici</li>
       <li>Studi per edifici, opere civili e infrastrutture</li>
-      <li><span class="text-neon-green">Analisi di stabilità</span> dei versanti</li>
-      <li>Programmazione ed esecuzione <span class="text-neon-green">indagini geognostiche</span></li>
+      <li>Analisi di stabilità dei versanti</li>
+      <li>Programmazione ed esecuzione indagini geognostiche</li>
     </ul>`,
     tags: ['Studio del suolo', 'Relazioni PdC', 'Mappatura'],
     ctaLabel: 'Approfondisci Geologia',
@@ -32,12 +33,13 @@ const cards = [
     index: '02',
     tag: 'Idrogeologia',
     label: 'Idrogeologia',
+    titleHtml: '<span class="text-neon-green">I</span>drogeologia e <span class="text-neon-green">R</span>isorse <span class="text-neon-green">I</span>driche',
     title: 'Idrogeologia e Risorse Idriche',
     desc: `<ul class="service-list">
-      <li>Studi idrogeologici e <span class="text-neon-green">caratterizzazione degli acquiferi</span></li>
+      <li>Studi idrogeologici e caratterizzazione degli acquiferi</li>
       <li>Ricerca e progettazione di pozzi</li>
       <li>Autorizzazioni per derivazioni e captazioni idriche</li>
-      <li>Gestione e tutela delle <span class="text-neon-green">risorse idriche sotterranee</span></li>
+      <li>Gestione e tutela delle risorse idriche sotterranee</li>
       <li>Campionamenti e monitoraggi delle acque sotterranee e superficiali</li>
     </ul>`,
     tags: ['Acque sotterranee', 'Pozzi', 'Rischio idraulico'],
@@ -51,13 +53,14 @@ const cards = [
     index: '03',
     tag: 'Ambiente',
     label: 'Valutazioni ambientali',
+    titleHtml: '<span class="text-neon-green">A</span>mbiente e <span class="text-neon-green">T</span>erritorio',
     title: 'Ambiente e Territorio',
     desc: `<ul class="service-list">
       <li>Studi ambientali e territoriali</li>
       <li>Terre e rocce da scavo</li>
-      <li>Progettazione per impianti di <span class="text-neon-green">trattamento e smaltimento rifiuti</span></li>
+      <li>Progettazione e AUTORIZZAZIONI per impianti.......</li>
       <li>Supporto alla progettazione ambientale</li>
-      <li>Consulenza ambientale nei <span class="text-neon-green">cantieri temporanei e mobili</span></li>
+      <li>Consulenza ambientale nei cantieri temporanei e mobili</li>
     </ul>`,
     tags: ['Bonifica', 'VIA / VAS', 'Analisi rischio'],
     ctaLabel: 'Approfondisci Ambiente',
@@ -71,13 +74,14 @@ const cards = [
     index: '04',
     tag: 'Energia',
     label: 'Energia e geotermia',
+    titleHtml: '<span class="text-neon-green">E</span>nergia e <span class="text-neon-green">I</span>nfrastrutture',
     title: 'Energia e Infrastrutture',
     desc: `<ul class="service-list">
-      <li>Studi geologici per impianti <span class="text-neon-green">fotovoltaici e agrivoltaici</span></li>
+      <li>Studi geologici per impianti fotovoltaici e agrivoltaici</li>
       <li>Opere connesse e infrastrutture energetiche</li>
       <li>Supporto agli iter autorizzativi</li>
       <li>Studi per opere viarie e infrastrutturali</li>
-      <li><span class="text-neon-green">Consulenza geologica</span> nelle fasi progettuali e realizzative</li>
+      <li>Consulenza geologica nelle fasi progettuali e realizzative</li>
     </ul>`,
     tags: ['Geotermia', 'Pompe di calore', "Sostenibilita'"],
     ctaLabel: 'Approfondisci Energia',
@@ -105,7 +109,7 @@ const cards = [
     <!-- Intro headline -->
     <div class="services__header" data-gsap="fade-up" data-gsap-delay="0.1">
       <h2 class="services__headline heading-xl">
-        SERVIZI PROFESSIONALI
+        <span class="text-neon-green">S</span>ERVIZI <span class="text-neon-green">P</span>ROFESSIONALI
       </h2>
       <p class="services__intro body-lg text-secondary">
         Dalla conoscenza del sottosuolo alla gestione delle criticità geologiche: Consulenza tecnica per Privati, Progettisti ed Enti.
@@ -132,9 +136,8 @@ const cards = [
           <div class="service-card__inner">
             <div class="service-card__accent" aria-hidden="true"></div>
 
-            <!-- Colonna sinistra: indice + icona -->
+            <!-- Colonna sinistra: icona (indice rimosso) -->
             <div class="service-card__left">
-              <span class="service-card__index mono text-muted">{card.index}</span>
               <div class="service-card__icon" aria-hidden="true">
                 <svg
                   class={`icon icon--${card.tag.toLowerCase()}`}
@@ -148,8 +151,8 @@ const cards = [
 
             <!-- Colonna destra: titolo + desc -->
             <div class="service-card__content">
-              <h3 class="service-card__title heading-md">{card.title}</h3>
-              <p class="service-card__desc body-sm text-secondary" set:html={card.desc}></p>
+              <h3 class="service-card__title heading-md" set:html={card.titleHtml}></h3>
+              <div class="service-card__desc body-sm" set:html={card.desc}></div>
             </div>
 
             <!-- Progress bar per Timed Cards -->
@@ -169,22 +172,29 @@ const cards = [
     gap: var(--sp-3);
   }
 
+  /* Icona ingrandita ~25% */
+  .service-card__icon svg {
+    width: 64px;
+    height: 64px;
+  }
+
   .service-card__desc :global(.service-list) {
     list-style: none;
     padding: 0;
     margin: var(--sp-4) 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-3);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3) var(--sp-6);
   }
-  
+
   .service-card__desc :global(.service-list li) {
     position: relative;
     padding-left: var(--sp-5);
     line-height: var(--lh-loose);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    color: var(--clr-text-primary);
   }
-  
+
   .service-card__desc :global(.service-list li::before) {
     content: "—";
     position: absolute;
@@ -192,5 +202,17 @@ const cards = [
     color: var(--clr-neon-green);
     opacity: 0.6;
     font-weight: 600;
+  }
+
+  /* Mobile: torna a 1 colonna */
+  @media (max-width: 768px) {
+    .service-card__desc :global(.service-list) {
+      grid-template-columns: 1fr;
+    }
+
+    .service-card__icon svg {
+      width: 48px;
+      height: 48px;
+    }
   }
 </style>

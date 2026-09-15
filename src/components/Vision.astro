@@ -33,31 +33,20 @@
     ─────────────────────────────────────────────────────────── -->
     <div class="vision__statement" data-gsap="fade-up" data-gsap-delay="0.1">
       <h2 class="vision__statement-headline heading-xl">
-        La Geologia come<br />
-        strumento per,<br />
-        <em class="text-neon-green">progettare con consapevolezza.</em>
+        La <span class="text-neon-green">Geologia</span> come strumento per<br />
+        <span class="text-neon-green">progettare</span> con consapevolezza.
       </h2>
     </div>
 
 
     <!-- ─── BLOCCO B: BIOGRAFIA ──────────────────────────────
-         Testo centrato con parole chiave evidenziate.
+         Copy snellito — singolo paragrafo editoriale.
     ─────────────────────────────────────────────────────────── -->
     <div class="vision__bio-centered" data-gsap="stagger-up">
       <p class="body-lg text-secondary">
-        Sono il Geologo Gianni Bastreghi e svolgo attività di <strong class="text-neon-green">consulenza geologica, geotecnica e sismica</strong> a supporto di progettisti, imprese, enti pubblici e privati.
-      </p>
-      <p class="body-lg text-secondary">
-        Il mio lavoro nasce dalla convinzione che una corretta <strong class="text-neon-green">conoscenza delle caratteristiche del terreno</strong> sia il punto di partenza per sviluppare progetti più consapevoli, sicuri ed efficienti.
-      </p>
-      <p class="body-lg text-secondary">
-        Attraverso <strong class="text-neon-green">indagini geologiche, analisi geotecniche e valutazioni</strong> delle condizioni del territorio, fornisco un supporto tecnico concreto nelle diverse fasi progettuali: dalla pianificazione iniziale alla realizzazione dell'opera.
-      </p>
-      <p class="body-lg text-secondary">
-        L'approccio combina <strong class="text-neon-green">conoscenza scientifica, esperienza sul campo e attenzione alle esigenze progettuali</strong>, con l'obiettivo di tradurre la complessità del sottosuolo in informazioni chiare e utili per le scelte tecniche.
-      </p>
-      <p class="body-lg text-secondary">
-        Ogni intervento presenta caratteristiche specifiche: comprenderle significa <strong class="text-neon-green">prevenire criticità, ottimizzare le soluzioni</strong> e costruire un rapporto equilibrato tra opere e territorio.
+        Sono il Geologo Gianni Bastreghi e svolgo attività di consulenza geologica, geotecnica e sismica per progettisti, imprese, enti e privati.
+        Affronto ogni intervento con un approccio concreto, integrando analisi tecnica e conoscenza del territorio a supporto delle scelte progettuali.
+        L'obiettivo è fornire valutazioni chiare e soluzioni affidabili, calibrate sulle caratteristiche e sulle esigenze di ogni cliente.
       </p>
     </div>
 
@@ -65,9 +54,6 @@
 
 
   </div>
-
-  <!-- Numero decorativo di sfondo (parallax GSAP) -->
-  <div class="vision__bg-number" aria-hidden="true" data-parallax="0.3">01</div>
 
 </section>
 
@@ -87,17 +73,18 @@
   }
 
   .vision__bio-centered {
-    max-width: 800px;
+    max-width: 960px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: var(--sp-4);
-    text-align: center;
+    text-align: left;
     margin-bottom: var(--sp-12);
   }
 
-  .vision__bio-centered strong {
-    font-weight: 600;
+  .vision__bio-centered .body-lg {
+    font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+    line-height: var(--lh-loose);
   }
 
 
@@ -111,6 +98,7 @@
     .vision__statement-headline {
       font-size: clamp(2.2rem, 7vw, 3.5rem);
     }
+
   }
 
   /* ── Prefers reduced motion ────────────────────────────── */
