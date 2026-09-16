@@ -92,7 +92,7 @@ const {
      ===================================================== -->
 <script>
   import { initLenis, destroyLenis } from '../scripts/lenis-init';
-  import { initGSAPAnimations, initScrollLogo, destroyGSAPAnimations } from '../scripts/animations';
+  import { initGSAPAnimations, initScrollLogo, initMapZoom, destroyGSAPAnimations } from '../scripts/animations';
   import { initCursor } from '../scripts/cursor';
   import { initMagneticButtons } from '../scripts/magnetic';
   import { initHeroSequence } from '../scripts/hero-sequence';
@@ -115,6 +115,7 @@ const {
     // 3. Animazioni GSAP principali
     initGSAPAnimations();
     initScrollLogo();
+    initMapZoom();
 
     // 4. Interazioni avanzate
     initCursor();

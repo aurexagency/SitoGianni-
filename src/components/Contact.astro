@@ -59,7 +59,7 @@
     </div>
 
     <!-- Right column: contact form -->
-    <div class="cta-contact__form-wrapper" data-gsap="fade-up" data-gsap-delay="0.2">
+    <div class="cta-contact__form-wrapper" data-gsap="fade-up" data-gsap-delay="0.2" style="padding-top: 0; margin-top: 0;">
       <form
         class="contact-form"
         id="contact-form"
@@ -118,24 +118,24 @@
           <span class="form-input__line" aria-hidden="true"></span>
         </div>
 
-        <!-- Row 4: Selezione Percorso / Area di interesse — Pill Radio Buttons -->
+        <!-- Row 4: Selezione Percorso / Area di interesse — Pill Checkbox (multiselezione) -->
         <fieldset class="form-group form-fieldset" id="contact-service-fieldset">
-          <legend class="form-label form-label--static">Selezione Percorso / Area di interesse</legend>
-          <div class="form-pills" role="radiogroup" aria-label="Seleziona un'area di interesse">
+          <legend class="form-label form-label--static">Area di interesse <span style="font-size:0.65rem; opacity:0.6; text-transform:none; letter-spacing:0;">(puoi sceglierne più di una)</span></legend>
+          <div class="form-pills" role="group" aria-label="Seleziona una o più aree di interesse">
             <label class="form-pill" for="percorso-geologia">
-              <input class="form-pill__input" type="radio" id="percorso-geologia" name="percorso" value="geologia" />
+              <input class="form-pill__input" type="checkbox" id="percorso-geologia" name="percorso-geologia" value="geologia" />
               <span class="form-pill__label">Geologia &amp; Geotecnica</span>
             </label>
             <label class="form-pill" for="percorso-idro">
-              <input class="form-pill__input" type="radio" id="percorso-idro" name="percorso" value="idrogeologia" />
+              <input class="form-pill__input" type="checkbox" id="percorso-idro" name="percorso-idrogeologia" value="idrogeologia" />
               <span class="form-pill__label">Idrogeologia &amp; Risorse Idriche</span>
             </label>
             <label class="form-pill" for="percorso-ambiente">
-              <input class="form-pill__input" type="radio" id="percorso-ambiente" name="percorso" value="ambiente" />
+              <input class="form-pill__input" type="checkbox" id="percorso-ambiente" name="percorso-ambiente" value="ambiente" />
               <span class="form-pill__label">Ambiente &amp; Autorizzazioni</span>
             </label>
             <label class="form-pill" for="percorso-energia">
-              <input class="form-pill__input" type="radio" id="percorso-energia" name="percorso" value="energia" />
+              <input class="form-pill__input" type="checkbox" id="percorso-energia" name="percorso-energia" value="energia" />
               <span class="form-pill__label">Energia &amp; Infrastrutture</span>
             </label>
           </div>

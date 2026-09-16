@@ -14,10 +14,12 @@
     "check": "astro check"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@types/leaflet": "^1.9.22",
     "astro": "^7.2.3",
     "gsap": "^3.12.5",
-    "lenis": "^1.1.14",
-    "@astrojs/sitemap": "^3.2.1"
+    "leaflet": "^1.9.4",
+    "lenis": "^1.1.14"
   },
   "devDependencies": {
     "@types/node": "^22.0.0"

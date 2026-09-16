@@ -815,104 +815,80 @@ button {
 }
 
 .services__header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-12);
-  align-items: end;
-  margin-block: var(--sp-8) var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-block: var(--sp-8) var(--sp-10);
+  max-width: 68ch;
 }
 
 .services__intro {
-  max-width: 48ch;
+  max-width: 52ch;
 }
 
-/* Cards Grid — Lista verticale, 1 col, larghezza piena */
+/* Cards Grid — griglia 2 colonne desktop */
 .services__cards-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-5);
+}
+
+@media (max-width: 768px) {
+  .services__cards-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 
-/* --- Service Card — layout lista orizzontale --- */
+/* --- Service Card — riquadro chiuso, griglia 2×2 --- */
 .service-card {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--clr-border);
+  background: var(--clr-bg-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg, 12px);
   overflow: hidden;
+  position: relative;
   transition: border-color var(--dur-base) var(--ease-out-expo),
-              background var(--dur-base) var(--ease-out-expo);
+              background var(--dur-base) var(--ease-out-expo),
+              box-shadow var(--dur-base) var(--ease-out-expo),
+              transform var(--dur-base) var(--ease-out-expo);
   cursor: pointer;
-  border-radius: 0;
-}
-
-.service-card:first-child {
-  border-top: 1px solid var(--clr-border);
 }
 
 .service-card:hover,
 .service-card:focus-visible {
-  border-color: var(--clr-border-hover);
-  background: rgba(46,37,32,0.20);
-}
-
-/* Stato attivo (Timed Cards) — espande il contenuto */
-.service-card.is-active {
-  background: rgba(46,37,32,0.35);
   border-color: var(--clr-accent);
+  background: var(--clr-bg-elevated, rgba(30,22,18,0.95));
+  box-shadow: 0 8px 32px rgba(196,97,62,0.12), 0 0 0 1px rgba(196,97,62,0.18);
+  transform: translateY(-3px);
+  outline: none;
 }
 
-.service-card.is-active + .service-card {
-  border-top-color: var(--clr-accent);
+/* Accent — linea superiore colorata on hover */
+.service-card__accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--grad-neon);
+  border-radius: var(--radius-lg, 12px) var(--radius-lg, 12px) 0 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
 }
 
-.service-card.is-active .service-card__accent {
-  transform: scaleY(1);
+.service-card:hover .service-card__accent,
+.service-card:focus-visible .service-card__accent {
+  transform: scaleX(1);
 }
 
-.service-card.is-active .service-card__icon {
-  color: var(--clr-accent);
-  filter: drop-shadow(0 0 10px var(--clr-accent-dim));
-}
-
-.service-card.is-active .service-card__index {
-  color: var(--clr-accent);
-}
-
-.service-card.is-active .service-card__title {
-  color: var(--clr-accent-light);
-}
-
-/* Stato collassato — riga bassa, solo titolo visibile */
-.service-card.is-collapsed .service-card__desc,
-.service-card.is-collapsed .service-card__tags,
-.service-card.is-collapsed .service-card__cta {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  margin: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  pointer-events: none;
-}
-
-/* Stato attivo — rivela il contenuto con transizione CSS di fallback */
-.service-card.is-active .service-card__desc,
-.service-card.is-active .service-card__tags,
-.service-card.is-active .service-card__cta {
-  max-height: 800px;
-  opacity: 1;
-  overflow: visible;
-  pointer-events: auto;
-}
-
-/* Layout riga orizzontale */
+/* Inner layout: colonna verticale */
 .service-card__inner {
-  padding: var(--sp-6) 0;
+  padding: var(--sp-4);
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: var(--sp-8);
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
   position: relative;
   min-height: unset;
 }
@@ -931,45 +907,19 @@ button {
   transition: transform var(--dur-slow) var(--ease-out-expo);
 }
 
-.service-card:hover .service-card__accent,
-.service-card:focus-visible .service-card__accent {
-  transform: scaleY(0.4);
-}
-
-/* Colonna sinistra: icona (indice rimosso) */
+/* Colonna sinistra — rimossa, ora icona è nell'header inline */
 .service-card__left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--sp-3);
-  flex-shrink: 0;
-  width: 80px;
-  padding-top: var(--sp-1);
-  padding-left: var(--sp-4);
+  display: none;
 }
 
-.service-card__index {
-  font-size: var(--fz-mono-sm);
-  display: block;
-  letter-spacing: 0.1em;
-  color: var(--clr-text-muted);
-  transition: color var(--dur-base);
-}
-
-/* Icon */
+/* Icon — nell'header, gestita dal componente */
 .service-card__icon {
-  width: 48px;
-  height: 48px;
-  color: var(--clr-text-muted);
+  width: 36px;
+  height: 36px;
+  color: var(--clr-accent);
+  flex-shrink: 0;
   transition: transform var(--dur-base) var(--ease-out-expo),
-              color var(--dur-base),
               filter var(--dur-base);
-}
-
-.service-card:hover .service-card__icon {
-  transform: scale(1.08);
-  color: var(--clr-accent-light);
-  filter: drop-shadow(0 0 8px var(--clr-accent-dim));
 }
 
 .icon {
@@ -977,24 +927,27 @@ button {
   height: 100%;
 }
 
-/* Colonna destra: titolo + desc + tags */
+/* Titolo — inline con icona, allineato sinistra */
+.service-card__title {
+  color: var(--clr-text-primary);
+  transition: color var(--dur-base);
+  text-align: left;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Content area */
 .service-card__content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
-  padding-right: var(--sp-6);
-}
-
-.service-card__title {
-  color: var(--clr-text-primary);
-  transition: color var(--dur-base);
 }
 
 .service-card__desc {
-  font-size: 1.15rem;
-  line-height: var(--lh-loose);
-  transition: opacity 0.4s ease, max-height 0.6s var(--ease-out-expo);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--clr-text-secondary);
 }
 
 /* Tags / Pills */
@@ -1090,18 +1043,16 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--sp-16);
-  align-items: start;
+  align-items: start; /* allineamento rigido al top per entrambe le colonne */
 }
 
 .cta-contact__copy {
-  /* sticky su scroll */
-  position: sticky;
-  top: 120px;
+  /* sticky rimosso: allineamento top puro tra le due colonne */
 }
 
 .cta-contact__headline {
-  margin-top: var(--sp-6);
-  margin-bottom: var(--sp-6);
+  margin-top: var(--sp-4);
+  margin-bottom: var(--sp-5);
 }
 
 .cta-contact__body {
@@ -1335,7 +1286,7 @@ button {
   background: rgba(196,97,62,0.04);
 }
 
-/* Checked */
+/* Checked — funziona sia per radio che per checkbox */
 .form-pill__input:checked + .form-pill__label {
   border-color: var(--clr-accent);
   color: var(--clr-accent-light);

@@ -135,6 +135,33 @@ export function initScrollLogo(): void {
     .to(logo, { rotation: 360, scale: 0.28, opacity: 0.07, x: 0,      ease: 'none', duration: 2 });
 }
 
+/* MODULE_MAP — Effetto "Atterraggio" sulla mappa */
+export function initMapZoom(): void {
+  const mapEl = document.querySelector<HTMLElement>('[data-gsap="map-zoom"] .location-map__leaflet');
+  if (!mapEl) return;
+
+  const rm = REDUCED_MOTION();
+  if (rm) {
+    gsap.set(mapEl, { scale: 1 });
+    return;
+  }
+
+  gsap.fromTo(
+    mapEl,
+    { scale: 1.55 },
+    {
+      scale: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '[data-gsap="map-zoom"]',
+        start: 'top bottom',   // inizia quando la sezione entra dal basso
+        end: 'center center',  // finisce quando il centro è a metà schermo
+        scrub: 1.8,            // smooth scrub legato allo scroll
+      },
+    }
+  );
+}
+
 /* Destroy: usato da astro:before-swap */
 export function destroyGSAPAnimations(): void {
   ScrollTrigger.getAll().forEach(t => t.kill());

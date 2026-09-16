@@ -1,0 +1,236 @@
+---
+/**
+ * LocationMap.astro — §5 Mappa Interattiva Leaflet.js
+ * Vista satellitare ESRI, marker rosso pulsante, polyline che evidenzia la via.
+ * Effetto "Atterraggio" GSAP allo scroll su tutto il contenitore.
+ *
+ * Coordinate: Via Fulcieri Paulucci di Calboli (De Calboli), Grosseto
+ * lat: 42.7609779 | lng: 11.1125094
+ * Bounding box strada: [42.7607856, 11.1120586] → [42.7613592, 11.1128103]
+ */
+---
+
+<section
+  class="location-map"
+  aria-label="Posizione dello studio — Via F.P. De Calboli 15, Grosseto"
+  data-section="map"
+>
+  <!-- Viewport con overflow:hidden — cattura lo scale GSAP -->
+  <div class="location-map__viewport" data-gsap="map-zoom">
+    <!-- Contenitore Leaflet -->
+    <div
+      id="leaflet-map"
+      class="location-map__leaflet"
+      role="application"
+      aria-label="Mappa interattiva della posizione dello studio"
+    ></div>
+
+    <!-- Vignette per sfumare i bordi -->
+    <div class="location-map__vignette" aria-hidden="true"></div>
+
+    <!-- Label "pin" sovrapposto -->
+    <div class="location-map__label" aria-hidden="true">
+      <span class="location-map__label-dot"></span>
+      <span class="location-map__label-text">Via F.P. De Calboli 15 — 58100 Grosseto</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Sezione full-width ── */
+  .location-map {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--clr-bg-base);
+  }
+
+  /* ── Viewport ── */
+  .location-map__viewport {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  /* ── Contenitore Leaflet full-size ── */
+  .location-map__leaflet {
+    width: 100%;
+    height: 100%;
+    /* Scurisci la mappa senza rovinare i colori reali */
+    filter: brightness(0.72) contrast(115%) saturate(80%);
+    /* Partenza scalata — GSAP porta a scale(1) tramite scrub */
+    transform: scale(1.55);
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  /* ── Vignette radiale ── */
+  .location-map__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 110% 110% at center,
+      transparent 35%,
+      rgba(22, 19, 17, 0.50) 72%,
+      rgba(22, 19, 17, 0.90) 100%
+    );
+    pointer-events: none;
+    z-index: 600; /* sopra la mappa Leaflet (z-index max ~500) */
+  }
+
+  /* ── Label "pin" glassmorphism ── */
+  .location-map__label {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    background: rgba(22, 19, 17, 0.80);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(196, 97, 62, 0.35);
+    border-radius: 999px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .location-map__label-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #C4613E;
+    box-shadow: 0 0 10px #C4613E, 0 0 20px rgba(196,97,62,0.5);
+    flex-shrink: 0;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 10px #C4613E, 0 0 20px rgba(196,97,62,0.5); }
+    50%       { box-shadow: 0 0 18px #C4613E, 0 0 36px rgba(196,97,62,0.75); }
+  }
+
+  .location-map__label-text {
+    font-family: 'Lora', 'Georgia', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #B5A99A;
+  }
+
+  /* ── Override stile popup Leaflet ── */
+  :global(.leaflet-popup-content-wrapper) {
+    background: rgba(33, 28, 25, 0.92) !important;
+    color: #F5F0E6 !important;
+    border: 1px solid rgba(196, 97, 62, 0.35) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(12px);
+    font-family: 'Lora', 'Georgia', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+  :global(.leaflet-popup-tip) {
+    background: rgba(33, 28, 25, 0.92) !important;
+  }
+  :global(.leaflet-popup-close-button) {
+    color: #B5A99A !important;
+  }
+  :global(.leaflet-control-attribution) {
+    background: rgba(22, 19, 17, 0.6) !important;
+    color: #7A6F65 !important;
+    font-size: 0.6rem;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .location-map__viewport {
+      height: 320px;
+    }
+    .location-map__label {
+      bottom: 24px;
+    }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .location-map__leaflet {
+      transform: scale(1);
+    }
+    .location-map__label-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<!-- Leaflet JS + Map Init -->
+<script>
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+
+  function initLeafletMap(): void {
+    const container = document.getElementById('leaflet-map');
+    if (!container || (container as any)._leaflet_id) return;
+
+    const LAT = 42.7609779;
+    const LNG = 11.1125094;
+
+    const map = L.map('leaflet-map', {
+      center: [LAT, LNG],
+      zoom: 18,
+      zoomControl: true,
+      scrollWheelZoom: true,
+      attributionControl: true,
+    });
+
+    // Tile satellitare ESRI (gratuito, no API key)
+    L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      {
+        attribution: '&copy; Esri, Maxar, Earthstar Geographics',
+        maxZoom: 20,
+      }
+    ).addTo(map);
+
+    // Polyline rossa sulla via
+    L.polyline(
+      [
+        [42.7607856, 11.1120586],
+        [42.7609779, 11.1125094],
+        [42.7613592, 11.1128103],
+      ],
+      { color: '#C4613E', weight: 6, opacity: 0.90, lineCap: 'round', lineJoin: 'round' }
+    ).addTo(map);
+
+    // Marker personalizzato SVG terracotta
+    const markerIcon = L.divIcon({
+      className: '',
+      html: `
+        <div style="position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+          <div style="position:absolute;width:32px;height:32px;border-radius:50%;background:rgba(196,97,62,0.20);animation:lm-pulse 2s ease-in-out infinite;"></div>
+          <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0C5.48 0 0 4.48 0 10c0 7.5 11 18 11 18S22 17.5 22 10c0-5.52-4.48-10-11-10z" fill="#C4613E"/>
+            <circle cx="11" cy="10" r="4" fill="#F5F0E6"/>
+          </svg>
+        </div>
+        <style>@keyframes lm-pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.8);opacity:0}}</style>
+      `,
+      iconSize: [32, 38],
+      iconAnchor: [16, 38],
+      popupAnchor: [0, -40],
+    });
+
+    L.marker([LAT, LNG], { icon: markerIcon })
+      .addTo(map)
+      .bindPopup(
+        '<strong>Studio Geol. Bastreghi</strong><br>Via F.P. De Calboli 15<br>58100 Grosseto (GR)',
+        { maxWidth: 200 }
+      );
+  }
+
+  document.addEventListener('astro:page-load', initLeafletMap);
+</script>
