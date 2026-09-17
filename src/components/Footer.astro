@@ -14,7 +14,8 @@ const year = new Date().getFullYear();
       <span class="nav__logo-prefix mono">geo.</span>
       <span class="nav__logo-name">Bastreghi</span>
       <p class="site-footer__tagline body-sm text-muted">
-        Dott. Geol. Gianni Bastreghi — P.IVA 00000000000
+        Dott. Geol. Gianni Bastreghi<br />
+        <span class="mono">P.IVA 01655350534</span>
       </p>
     </div>
 
@@ -33,3 +34,49 @@ const year = new Date().getFullYear();
 
   </div>
 </footer>
+
+<script>
+  function setupFooterReveal() {
+    const footer = document.getElementById('site-footer');
+    const main = document.getElementById('main-content');
+    
+    if (!footer || !main) return;
+    
+    // Rispetta l'accessibilità: se l'utente preferisce ridurre le animazioni, usiamo il footer standard
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (rm) {
+      footer.style.position = 'static';
+      main.style.marginBottom = '0';
+      return;
+    }
+
+    // Configura il footer "a scomparsa" (fixed dietro al main)
+    footer.style.position = 'fixed';
+    footer.style.bottom = '0';
+    footer.style.left = '0';
+    footer.style.width = '100%';
+    footer.style.zIndex = '-1';
+    
+    // Assicura che il main copra il footer
+    main.style.position = 'relative';
+    main.style.zIndex = '1';
+    main.style.backgroundColor = 'var(--clr-bg-base)';
+
+    // Aggiorna il margin-bottom del main in base all'altezza dinamica del footer
+    const updateMargin = () => {
+      main.style.marginBottom = `${footer.offsetHeight}px`;
+    };
+    
+    // Inizializzazione e listener
+    updateMargin();
+    window.addEventListener('resize', updateMargin);
+    
+    // Cleanup per le Astro View Transitions
+    document.addEventListener('astro:before-swap', () => {
+      window.removeEventListener('resize', updateMargin);
+    }, { once: true });
+  }
+
+  // Esegui ad ogni navigazione della pagina
+  document.addEventListener('astro:page-load', setupFooterReveal);
+</script>
